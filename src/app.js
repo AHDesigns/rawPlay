@@ -51,7 +51,7 @@ app.use(async (ctx, next) => {
 router.get('/', (ctx) => { ctx.redirect('/welcome'); });
 router.get('/login', ctx => api.login(ctx));
 router.get('/logout', ctx => api.logout(ctx));
-router.get('/welcome', ctx => api.mainReq(ctx));
+router.get('/welcome', ctx => api.ぱいぱい(ctx));
 router.get('/cook', (ctx) => {
     ctx.cookies.set('login', 'yeah', { signed: true });
     ctx.body = 'you have a cookie?';

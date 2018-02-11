@@ -1,6 +1,11 @@
 const request = require('./middleware/request');
 const readFile = require('./middleware/readFile');
 
+async function senosen(ctx) {
+    ctx.set('Content-Type', 'text/html');
+    ctx.body = await readFile(__dirname + '/public/html/404.html');
+}
+
 async function login(ctx) {
     try {
         ctx.set('Content-Type', 'text/html');
@@ -38,5 +43,6 @@ module.exports = {
     login,
     logout,
     mainReq,
+    senosen
 };
 

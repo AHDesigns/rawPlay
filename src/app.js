@@ -1,7 +1,9 @@
 require('dotenv').config();
 const Koa = require('koa');
 const Router = require('koa-router');
+
 const api = require('./api');
+const readFile = require('./middleware/readFile');
 
 const app = new Koa();
 const router = new Router();
@@ -20,7 +22,7 @@ app.use(async (ctx, next) => {
         await next();
     } catch (err) {
         ctx.status = err.status || 500;
-        ctx.body = '<html><body><h2>500 - Bugger!</h2><h3>Looks like we messed up!</h3><img src="https://media.giphy.com/media/xUA7aYAQ9Zvb35PUTS/giphy.gif" /><body></html>';
+        ctx.body = await readFile(__dirname + '/public/html/500.html');
         ctx.app.emit('error', err, ctx);
     }
 });
@@ -56,7 +58,7 @@ router.get('/cook', (ctx) => {
     ctx.cookies.set('login', 'yeah', { signed: true });
     ctx.body = 'you have a cookie?';
 });
-router.get('*', (ctx) => { ctx.body = 'sup?'; });
+router.get('*', (ctx) => api.senosen(ctx));
 
 // app
 app.use(router.routes());

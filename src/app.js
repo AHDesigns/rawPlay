@@ -1,4 +1,6 @@
 require('dotenv').config();
+const path = require('path');
+
 const Koa = require('koa');
 const Router = require('koa-router');
 
@@ -22,7 +24,7 @@ app.use(async (ctx, next) => {
         await next();
     } catch (err) {
         ctx.status = err.status || 500;
-        ctx.body = await readFile(__dirname + '/public/html/500.html');
+        ctx.body = await readFile(`${__dirname}/public/html/500.html`);
         ctx.app.emit('error', err, ctx);
     }
 });
@@ -48,8 +50,12 @@ app.use(async (ctx, next) => {
     }
 });
 
-
 // routing
+router.get('/img*', async (ctx) => {
+    ctx.set('Content-type', 'image/jpg');
+    ctx.body = await readFile(`${__dirname}/public${ctx.url}`);
+});
+
 router.get('/', (ctx) => { ctx.redirect('/welcome'); });
 router.get('/login', ctx => api.login(ctx));
 router.get('/logout', ctx => api.logout(ctx));
@@ -58,7 +64,7 @@ router.get('/cook', (ctx) => {
     ctx.cookies.set('login', 'yeah', { signed: true });
     ctx.body = 'you have a cookie?';
 });
-router.get('*', (ctx) => api.senosen(ctx));
+router.get('*', ctx => api.senosen(ctx));
 
 // app
 app.use(router.routes());

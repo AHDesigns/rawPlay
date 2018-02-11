@@ -4,4 +4,4 @@ rules:
   import/no-extraneous-dependencies: "off"
   indent: ["error", 4]
   comma-dangle: ["off"]
-  padded-blocks: ["error", "always"]
+  # padded-blocks: ["error", "always"]

@@ -15,7 +15,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.16.2"
+    "dotenv": "^5.0.0",
+    "koa": "^2.4.1",
+    "koa-router": "^7.4.0"
   },
   "devDependencies": {
     "eslint": "^4.17.0",
